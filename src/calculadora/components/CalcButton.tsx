@@ -1,5 +1,5 @@
-const CalcButton = ({ label }: { label: string }) => {
+const CalcButtonNumber = ({ label }: { label: string }) => {
   return <button>{label}</button>;
 };
 
-export default CalcButton;
+export default CalcButtonNumber;
