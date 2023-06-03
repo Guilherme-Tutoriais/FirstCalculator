@@ -1,5 +1,11 @@
-const CalcButtonOperator = ({ label }: { label: string }) => {
-  return <button>{label}</button>;
+const CalcButtonOperator = ({
+  value,
+  onClick,
+}: {
+  value: string;
+  onClick?: any;
+}) => {
+  return <button onClick={onClick}>{value}</button>;
 };
 
 export default CalcButtonOperator;
