@@ -1,11 +1,13 @@
 import { useState } from "react";
 import CalcButtonNumber from "./components/CalcButtonNumber";
 import CalcButtonOperator from "./components/CalcButtonOperator";
+import doCalculation from "./utils/doCalculation";
 
 interface Display {
   current: string;
   total: string;
   isInitial: boolean;
+  operation: string;
 }
 
 const Calculator = () => {
@@ -13,16 +15,40 @@ const Calculator = () => {
     current: "0",
     total: "0",
     isInitial: true,
+    operation: "",
   });
   const handleNumber = (value: string) => {
     let newValue = value;
     if (display.isInitial == false) {
       newValue = display.current + value;
     }
-    setDisplay({ current: newValue, total: display.total, isInitial: false });
+    setDisplay({
+      current: newValue,
+      total: display.total,
+      isInitial: false,
+      operation: display.operation,
+    });
   };
   const handleOperator = (op: string) => {
-    console.log(`operation: ${op}`);
+    const total = doCalculation(
+      display.operation,
+      parseInt(display.total),
+      parseInt(display.current)
+    );
+    setDisplay({
+      current: total.toString(),
+      total: total.toString(),
+      isInitial: true,
+      operation: op,
+    });
+  };
+  const handleClear = () => {
+    setDisplay({
+      current: "0",
+      total: "0",
+      isInitial: true,
+      operation: "",
+    });
   };
   const renderDisplay = () => {
     return display.current;
@@ -49,7 +75,7 @@ const Calculator = () => {
         <CalcButtonOperator value="-" onClick={handleOperator} />
       </div>
       <div>
-        <CalcButtonOperator value="C" onClick={handleOperator} />
+        <CalcButtonOperator value="C" onClick={handleClear} />
         <CalcButtonNumber value="0" onClick={handleNumber} />
         <CalcButtonOperator value="=" onClick={handleOperator} />
         <CalcButtonOperator value="+" onClick={handleOperator} />
